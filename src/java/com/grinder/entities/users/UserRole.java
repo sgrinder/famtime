@@ -2,7 +2,6 @@ package com.grinder.entities.users;
 
 public class UserRole {
     private int roleId;
-    private int accountId;
     private String description; //DB MAX 24
     private int statusId;
     private String createdDate;
@@ -16,14 +15,6 @@ public class UserRole {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
-    }
-
-    public int getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
     }
 
     public String getDescription() {
@@ -62,7 +53,6 @@ public class UserRole {
     public String toString() {
         return "UserRole{" +
                 "roleId=" + roleId +
-                ", accountId=" + accountId +
                 ", description='" + description + '\'' +
                 ", statusId=" + statusId +
                 ", createdDate='" + createdDate + '\'' +

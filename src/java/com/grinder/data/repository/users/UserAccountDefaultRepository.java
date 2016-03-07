@@ -1,7 +1,7 @@
 package com.grinder.data.repository.users;
 
 import com.grinder.data.connections.AccessConnection;
-import com.grinder.data.connections.UserAccountAccessConnection;
+import com.grinder.data.connections.UserAccessConnection;
 import com.grinder.data.queries.users.UserAccountQueries;
 import com.grinder.entities.users.UserAccount;
 
@@ -11,12 +11,12 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserAccountDefaulRepository implements UserAccountRepository {
-    private AccessConnection accessConnection = new UserAccountAccessConnection();
+public class UserAccountDefaultRepository implements UserAccountRepository {
+    private AccessConnection accessConnection = new UserAccessConnection();
     private Connection connection;
     private boolean testMode;
 
-    public UserAccountDefaulRepository(boolean testMode){
+    public UserAccountDefaultRepository(boolean testMode){
         this.testMode = testMode;
     }
 

@@ -9,6 +9,7 @@ public interface UserAccountRepository {
     boolean updateUserAccount(UserAccount userAccount);
 
     List<UserAccount> getUserAccounts();
+
     UserAccount getUserAccountByUserAccountId(int userAccountId);
     UserAccount getUserAccountByUserName(String userName);
     UserAccount getUserAccountByUserNameAndPassword(String userName, String password);

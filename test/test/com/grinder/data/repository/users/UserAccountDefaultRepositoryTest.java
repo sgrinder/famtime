@@ -9,13 +9,13 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class UserAccountDefaulRepositoryTest {
+public class UserAccountDefaultRepositoryTest {
     private UserAccountRepository userAccountRepository;
 
     @Before
     public void setUp(){
         boolean testMode = true;
-        userAccountRepository = new UserAccountDefaulRepository(testMode);
+        userAccountRepository = new UserAccountDefaultRepository(testMode);
     }
 
     @After
