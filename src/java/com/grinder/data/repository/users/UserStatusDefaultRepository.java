@@ -119,7 +119,7 @@ public class UserStatusDefaultRepository implements UserStatusRepository {
 
         try{
             checkConnection();
-            
+
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, statusId);
 
