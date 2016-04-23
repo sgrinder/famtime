@@ -1,5 +1,6 @@
 package com.grinder.data.repository.users;
 
+import com.grinder.data.connections.mysql.MySqlUsersDevelopmentSchemaConnection;
 import com.grinder.entities.users.UserAccountRole;
 import org.junit.After;
 import org.junit.Before;
@@ -14,8 +15,7 @@ public class UserAccountRoleDefaultRepositoryTest {
 
     @Before
     public void setUp(){
-        boolean testMode = true;
-        userAccountRoleRepository = new UserAccountRoleDefaultRepository(testMode);
+        userAccountRoleRepository = new UserAccountRoleDefaultRepository(new MySqlUsersDevelopmentSchemaConnection());
     }
 
     @After

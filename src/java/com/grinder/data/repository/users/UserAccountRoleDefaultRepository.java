@@ -2,6 +2,7 @@ package com.grinder.data.repository.users;
 
 import com.grinder.data.connections.AccessConnection;
 import com.grinder.data.connections.UserAccessConnection;
+import com.grinder.data.connections.mysql.MySqlConnections;
 import com.grinder.data.queries.users.UserAccountRoleQueries;
 import com.grinder.entities.users.UserAccountRole;
 
@@ -12,26 +13,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserAccountRoleDefaultRepository implements UserAccountRoleRepository {
-    private AccessConnection accessConnection = new UserAccessConnection();
+    private MySqlConnections mySqlConnections;
     private Connection connection;
-    private boolean testMode;
 
-    public UserAccountRoleDefaultRepository(boolean testMode){
-        this.testMode = testMode;
+    public UserAccountRoleDefaultRepository(MySqlConnections mySqlConnection){
+        this.mySqlConnections = mySqlConnection;
     }
 
     private void checkConnection(){
         try{
-            if(connection == null || connection.isClosed()){
-                if(testMode)
-                    connection = accessConnection.getTestConnection();
-                else
-                    connection = accessConnection.getConnection();
+            if(this.connection != null || this.connection.isClosed()){
+                this.connection = mySqlConnections.getConnection();
             }
         } catch(Exception ex){
-            System.out.println("Failed to connect to User database :: \n\n" + ex.getMessage());
+            System.out.println("Failed to connect to User schema :: \n\n" + ex.getMessage());
         }
     }
+
+
     @Override
     public boolean createUserAccountRole(UserAccountRole userAccountRole) {
         String sql = UserAccountRoleQueries.INSERT_ACCOUNT_ROLE;

@@ -99,8 +99,8 @@ public class UserRoleDefaultRepository implements UserRoleRepository {
                 userRole.setRoleId(resultSet.getInt("role_id"));
                 userRole.setDescription(resultSet.getString("description"));
                 userRole.setStatusId(resultSet.getInt("status_id"));
-                userRole.setCreatedDate(resultSet.getString("created_date"));
-                userRole.setModifiedDate(resultSet.getString("modified_date"));
+                userRole.setCreatedDate(resultSet.getTimestamp("created_date"));
+                userRole.setModifiedDate(resultSet.getTimestamp("modified_date"));
 
                 userRoles.add(userRole);
             }
@@ -133,8 +133,8 @@ public class UserRoleDefaultRepository implements UserRoleRepository {
                 userRole.setRoleId(resultSet.getInt("role_id"));
                 userRole.setDescription(resultSet.getString("description"));
                 userRole.setStatusId(resultSet.getInt("status_id"));
-                userRole.setCreatedDate(resultSet.getString("created_date"));
-                userRole.setModifiedDate(resultSet.getString("modified_date"));
+                userRole.setCreatedDate(resultSet.getTimestamp("created_date"));
+                userRole.setModifiedDate(resultSet.getTimestamp("modified_date"));
             }
             resultSet.close();
             preparedStatement.close();

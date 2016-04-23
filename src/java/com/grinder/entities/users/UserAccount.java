@@ -1,12 +1,33 @@
 package com.grinder.entities.users;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.sql.Timestamp;
+
+@Entity
+@Table(schema = "users_development", name = "accounts")
 public class UserAccount {
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "account_id")
     private int accountId;
+
+    @Column(name = "account_name", nullable = false, length = 18)
     private String accountName;
+
+    @Column(name = "password", nullable = false, length = 32)
     private String password;
+
+    @Column(name = "status_id")
     private int statusId;
-    private String createdDate;
-    private String modifiedDate;
+
+    @Column(name = "created_date")
+    private Timestamp createdDate;
+
+    @Column(name = "modified_date")
+    private Timestamp modifiedDate;
 
     public UserAccount() {}
 
@@ -42,19 +63,19 @@ public class UserAccount {
         this.statusId = statusId;
     }
 
-    public String getCreatedDate() {
+    public Timestamp getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(String createdDate) {
+    public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
     }
 
-    public String getModifiedDate() {
+    public Timestamp getModifiedDate() {
         return modifiedDate;
     }
 
-    public void setModifiedDate(String modifiedDate) {
+    public void setModifiedDate(Timestamp modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 

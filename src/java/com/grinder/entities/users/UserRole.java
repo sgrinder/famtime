@@ -1,11 +1,26 @@
 package com.grinder.entities.users;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import java.sql.Timestamp;
+
 public class UserRole {
+
+    @Id
+    @Column(name = "role_id")
     private int roleId;
-    private String description; //DB MAX 24
+
+    @Column(name = "description", nullable = false, length = 22)
+    private String description;
+
+    @Column(name = "status_id")
     private int statusId;
-    private String createdDate;
-    private String modifiedDate;
+
+    @Column(name = "created_date")
+    private Timestamp createdDate;
+
+    @Column(name = "modified_date")
+    private Timestamp modifiedDate;
 
     public UserRole() {}
 
@@ -33,19 +48,19 @@ public class UserRole {
         this.statusId = statusId;
     }
 
-    public String getCreatedDate() {
+    public Timestamp getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(String createdDate) {
+    public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
     }
 
-    public String getModifiedDate() {
+    public Timestamp getModifiedDate() {
         return modifiedDate;
     }
 
-    public void setModifiedDate(String modifiedDate) {
+    public void setModifiedDate(Timestamp modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 

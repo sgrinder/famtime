@@ -1,6 +1,9 @@
 package com.grinder.data.repository.users;
 
+import com.grinder.data.connections.mysql.MySqlConnections;
+import com.grinder.data.connections.mysql.MySqlUsersDevelopmentSchemaConnection;
 import com.grinder.entities.users.UserAccount;
+import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,16 +14,16 @@ import static org.junit.Assert.*;
 
 public class UserAccountDefaultRepositoryTest {
     private UserAccountRepository userAccountRepository;
+    private UserAccount userAccount;
 
     @Before
     public void setUp(){
-        boolean testMode = true;
-        userAccountRepository = new UserAccountDefaultRepository(testMode);
+        userAccountRepository = new UserAccountDefaultRepository(new MySqlUsersHibernateDevelopmentFactorySession());
     }
 
     @After
     public void tearDown(){
-        userAccountRepository.removeAllUserAccounts();
+        removeTestAccount(userAccount);
     }
 
     private UserAccount getTestUserAccount(){
@@ -28,82 +31,53 @@ public class UserAccountDefaultRepositoryTest {
         userAccount.setAccountName("Test");
         userAccount.setPassword("Password");
         userAccount.setStatusId(1);
+        userAccount.setCreatedDate(new java.sql.Timestamp(new java.util.Date().getTime()));
+        userAccount.setModifiedDate(new java.sql.Timestamp(new java.util.Date().getTime()));
         return userAccount;
     }
 
     @Test
-    public void testCreateUserAccount() throws Exception {
-        UserAccount testUserAccount = getTestUserAccount();
-
-        boolean successful = userAccountRepository.createUserAccount(testUserAccount);
-
-        assertTrue(successful);
+    public void testHibernateCreateUserAccount() throws Exception {
+        userAccount = getTestUserAccount();
+        userAccountRepository.saveAccount(userAccount);
+        assertNotNull(userAccount.getAccountId());
     }
 
     @Test
-    public void testUpdateUserAccount() throws Exception {
-        UserAccount testUserAccount = getTestUserAccount();
+    public void testHibernateUpdateUserAccount() throws Exception{
+        userAccount = getTestUserAccount();
 
-        userAccountRepository.createUserAccount(testUserAccount);
+        userAccountRepository.saveAccount(userAccount);
+        userAccount.setStatusId(1);
 
-        UserAccount userAccount = userAccountRepository.getUserAccountByUserName("Test");
-        userAccount.setAccountName("Tester");
+        userAccount = userAccountRepository.updateAccount(userAccount);
 
-        userAccountRepository.updateUserAccount(userAccount);
-
-        UserAccount updatedUserAccount = userAccountRepository.getUserAccountByUserName("Tester");
-
-        assertNotNull(updatedUserAccount);
+        assertEquals(1, userAccount.getStatusId());
     }
 
     @Test
-    public void testGetUserAccounts() throws Exception {
-        UserAccount testUserAccount = getTestUserAccount();
+    public void testHibernateUserReadById(){
+        userAccount = getTestUserAccount();
+        userAccountRepository.saveAccount(userAccount);
 
-        userAccountRepository.createUserAccount(testUserAccount);
+        UserAccount retrievedUserAccount = userAccountRepository.getById(userAccount.getAccountId());
 
-        List<UserAccount> userAccounts = userAccountRepository.getUserAccounts();
-
-        assertNotNull(userAccounts);
-        assertTrue(userAccounts.size() == 1);
+        assertNotNull(retrievedUserAccount);
+        assertEquals(retrievedUserAccount.getAccountId(), userAccount.getAccountId());
     }
 
     @Test
-    public void testGetUserAccountByUserId() throws Exception {
-        UserAccount testUserAccount = getTestUserAccount();
+    public void testHibernateUserRealAll(){
+        userAccount = getTestUserAccount();
+        userAccountRepository.saveAccount(userAccount);
 
-        userAccountRepository.createUserAccount(testUserAccount);
+        List<UserAccount> userAccountList = userAccountRepository.getAll();
 
-        UserAccount userAccount = userAccountRepository.getUserAccountByUserName("Test");
-        int accountId = userAccount.getAccountId();
-
-        UserAccount userAccountById = userAccountRepository.getUserAccountByUserAccountId(accountId);
-
-        assertNotNull(userAccountById);
-        assertEquals(accountId, userAccountById.getAccountId());
+        assertTrue(userAccountList.size() > 0);
     }
 
-    @Test
-    public void testGetUserAccountByUserName() throws Exception {
-        UserAccount testUserAccount = getTestUserAccount();
-
-        userAccountRepository.createUserAccount(testUserAccount);
-
-        UserAccount userAccount = userAccountRepository.getUserAccountByUserName("Test");
-
-        assertNotNull(userAccount);
-        assertEquals("Test", userAccount.getAccountName());
+    public void removeTestAccount(UserAccount userAccount){
+        userAccountRepository.removeAccount(userAccount);
     }
 
-    @Test
-    public void testGetUserAccountByUserNameAndPassword() throws Exception {
-        UserAccount testUserAccount = getTestUserAccount();
-
-        userAccountRepository.createUserAccount(testUserAccount);
-
-        UserAccount userAccount = userAccountRepository.getUserAccountByUserNameAndPassword("Test", "Password");
-
-        assertNotNull(userAccount);
-        assertEquals("Password", userAccount.getPassword());
-    }
 }
