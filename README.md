@@ -1,7 +1,4 @@
 # famtime
 
-DATA
-Access databases split for different reasons.
-
-Users.accdb - This holds user account information
+Utilizing Hibernate for MySql database access.
 
