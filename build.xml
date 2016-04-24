@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<project name="FamTime" default="info">
+
+  <target name="info">
+    <echo>
+      FamTime Ant Build
+      =================
+      FamTime is an application that collects family photos and shares them within your family domain.
+      Users can share photos or albums to other users of FamTime, so long as they are granted permission to do so.
+      =================
+      This build script creates the build directory in the project's root folder.
+      It compiles the code into .class files in build/main and build/test,
+      compiles the tests, and it can even execute all tests within the project at once.
+      =================
+    </echo>
+  </target>
+
+  <property name="src" location="src/java"/>
+  <property name="test" location="test/java"/>
+  <property name="build" location="build"/>
+
+  <property name="resc" location="src/resources"/>
+
+  <property name="junitpath" location="libraries/junit-4.12.jar"/>
+  <property name="lib" location="libraries"/>
+
+  <property name="src.build" location="build/main"/>
+  <property name="test.build" location="build/test"/>
+
+  <path id="classpath">
+    <pathelement location="${junitpath}"/>
+    <pathelement location="${src.build}"/>
+  </path>
+
+  <path id="classpath.test">
+    <pathelement location="${junitpath}"/>
+    <pathelement location="libraries/hamcrest-core-1.3.jar"/>
+    <pathelement location="${src.build}"/>
+  </path>
+
+  <target name="init" depends="clean">
+    <echo>
+      Target: init
+      =================
+      Creating the build, build/main, and build/test directories
+      =================
+    </echo>
+    <mkdir dir="${build}"/>
+    <mkdir dir="${src.build}"/>
+
+  </target>
+
+  <target name="compile" description="compile the code" depends="init">
+    <echo>
+      Target: compile
+      =================
+      Compiling application code to build/main
+      =================
+    </echo>
+    <javac includeantruntime="false"
+           srcdir="${src}"
+           destdir="${src.build}"
+           fork="true"
+           debug="on"
+           includes="**"
+    >
+      <classpath refid="classpath" />
+      <classpath>
+        <fileset dir="${lib}">
+          <include name="**/*.jar" />
+        </fileset>
+      </classpath>
+    </javac>
+
+    <echo>
+      Target: compile
+      =================
+      Copying main resources
+      =================
+    </echo>
+
+    <copy todir="${src.build}">
+      <fileset dir="${resc}"/>
+    </copy>
+
+    <echo>
+      Target: compile
+      =================
+      Copying libraries
+      =================
+    </echo>
+
+    <copy todir="${build}/libraries">
+      <fileset dir="${lib}">
+        <include name="**/*.jar" />
+      </fileset>
+    </copy>
+
+  </target>
+
+  <target name="test-compile" depends="compile">
+    <echo>
+      Target: test-compile
+      =================
+      Copying main resources
+      =================
+    </echo>
+
+    <mkdir dir="${test.build}"/>
+
+    <javac srcdir="${test}"
+           destdir="${test.build}"
+           includeantruntime="false">
+      <classpath refid="classpath.test"/>
+    </javac>
+
+    <echo>
+      Target: test-compile
+      =================
+      Copying test resources
+      =================
+    </echo>
+
+    <copy todir="${test.build}">
+      <fileset dir="${resc}"/>
+    </copy>
+
+  </target>
+
+  <target name="test-all" depends="test-compile">
+
+    <echo>
+      Target: test-all
+      =================
+      Executing all tests in the project with mask (**/*Test.java)
+      =================
+    </echo>
+    <mkdir dir="${build}/testreports"/>
+
+    <junit printsummary="on"
+           haltonfailure="yes"
+           fork="true">
+
+      <!-- TEST CLASSPATH -->
+      <classpath>
+        <path refid="classpath.test"/>
+        <pathelement location="${test.build}"/>
+      </classpath>
+
+      <!-- INCLUDE LIBRARIES IN CLASSPATH -->
+      <classpath>
+        <fileset dir="libraries">
+          <include name="**/*.jar" />
+        </fileset>
+      </classpath>
+
+      <formatter type="plain"/>
+
+      <batchtest todir="${build}/testreports">
+        <fileset dir="${test}" includes="**/*Test.java" />
+      </batchtest>
+
+    </junit>
+
+
+  </target>
+
+  <target name="clean" description="removes any build, or artifacts">
+    <echo>
+      Target: clean
+      =================
+      Removing the entire build directory
+      =================
+    </echo>
+    <delete dir="${build}" />
+  </target>
+
+</project>
