@@ -1,13 +1,14 @@
 package com.grinder.famtime.entities.users;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
-@Table(name = "accounts")
+@Table(name = "account_roles")
 public class AccountRoleEntity {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "account_role_id")
     private int id;
 
@@ -21,10 +22,10 @@ public class AccountRoleEntity {
     private int statusId;
 
     @Column(name = "created_date")
-    private String createdDate;
+    private Timestamp createdDate;
 
     @Column(name = "modified_date")
-    private String modifiedDate;
+    private Timestamp modifiedDate;
 
     public AccountRoleEntity() {}
 
@@ -60,19 +61,19 @@ public class AccountRoleEntity {
         this.statusId = statusId;
     }
 
-    public String getCreatedDate() {
+    public Timestamp getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(String createdDate) {
+    public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
     }
 
-    public String getModifiedDate() {
+    public Timestamp getModifiedDate() {
         return modifiedDate;
     }
 
-    public void setModifiedDate(String modifiedDate) {
+    public void setModifiedDate(Timestamp modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 

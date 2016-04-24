@@ -28,10 +28,9 @@ public class AccountSecurityDefaultRepository implements AccountSecurityReposito
                 .setParameter("inAccountName", userName)
                 .setParameter("inPassword", password);
         List results = query.list();
+        session.close();
 
         boolean result = results.size() == 0? false : true;
-
-        session.close();
 
         return result;
     }

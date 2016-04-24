@@ -2,7 +2,6 @@ package com.grinder.famtime.entities.users;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Collection;
 
 @Entity
 @Table(name = "accounts")

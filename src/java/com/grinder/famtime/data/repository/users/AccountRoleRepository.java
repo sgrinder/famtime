@@ -5,13 +5,11 @@ import com.grinder.famtime.entities.users.AccountRoleEntity;
 import java.util.List;
 
 public interface AccountRoleRepository {
-    boolean createUserAccountRole(AccountRoleEntity accountRoleEntity);
-    boolean updateUserAccountRole(AccountRoleEntity accountRoleEntity);
-    boolean removeUserAccountRoleByUserAccountRoleId(int userAccountRoleId);
-
-    List<AccountRoleEntity> getUserAccountRoles();
-    List<AccountRoleEntity> getUserAccountRolesByAccountId(int accountId);
-    List<AccountRoleEntity> getUserAccountRolesByRoleId(int roleId);
-
-    boolean removeAllUserAccountRoles();
+    AccountRoleEntity saveAccountRole(AccountRoleEntity accountRoleEntity);
+    AccountRoleEntity updateAccountRole(AccountRoleEntity accountRoleEntity);
+    AccountRoleEntity getById(int accountRoleId);
+    List<AccountRoleEntity> getByAccountId(int accountId);
+    List<AccountRoleEntity> getByRoleId(int roleId);
+    List<AccountRoleEntity> getAll();
+    void removeAccountRole(AccountRoleEntity accountRoleEntity);
 }
