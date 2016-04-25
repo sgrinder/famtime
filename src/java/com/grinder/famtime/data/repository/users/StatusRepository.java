@@ -5,12 +5,9 @@ import com.grinder.famtime.entities.users.StatusEntity;
 import java.util.List;
 
 public interface StatusRepository {
-    boolean createStatus(StatusEntity userStatus);
-    boolean updateStatus(StatusEntity userStatus);
-
-    List<StatusEntity> getStatuses();
-    StatusEntity getStatusByStatusId(int statusId);
-
-    //WARNING: TESTING ONLY
-    boolean removeAllStatuses();
+    StatusEntity saveStatus(StatusEntity statusEntity);
+    StatusEntity updateStatus(StatusEntity statusEntity);
+    StatusEntity getById(int statusId);
+    List<StatusEntity> getAll();
+    void removeStatus(StatusEntity statusEntity);
 }

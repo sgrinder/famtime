@@ -31,5 +31,7 @@
         <mapping class="com.grinder.famtime.entities.users.AccountEntity"/>
         <mapping class="com.grinder.famtime.entities.users.RoleEntity"/>
         <mapping class="com.grinder.famtime.entities.users.AccountRoleEntity"/>
+        <mapping class="com.grinder.famtime.entities.users.StatusEntity"/>
+
     </session-factory>
 </hibernate-configuration>

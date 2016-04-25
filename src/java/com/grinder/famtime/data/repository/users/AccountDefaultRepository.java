@@ -11,6 +11,7 @@ public class AccountDefaultRepository implements AccountRepository {
 
     public AccountDefaultRepository(MySqlUsersFactorySession mySqlUsersFactorySession){
         this.sessionFactory = mySqlUsersFactorySession.getSessionFactory();
+
     }
 
     @Override
@@ -37,7 +38,7 @@ public class AccountDefaultRepository implements AccountRepository {
     @Override
     public AccountEntity getById(int userAccountId){
         Session session = sessionFactory.openSession();
-        AccountEntity accountEntity = (AccountEntity) session.get(AccountEntity.class, userAccountId);
+        AccountEntity accountEntity = session.get(AccountEntity.class, userAccountId);
         session.close();
         return accountEntity;
     }
@@ -57,5 +58,6 @@ public class AccountDefaultRepository implements AccountRepository {
         session.delete(accountEntity);
         session.getTransaction().commit();
         session.close();
+
     }
 }
